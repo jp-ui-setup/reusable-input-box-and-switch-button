@@ -137,3 +137,113 @@ In this example, the data we are binding to our event is `$event.target.value` w
 
 > Remember: Native HTML elements always fire `Events`, so you'll never get a primitive (like e.g. a Boolean or a String) as `$event`. That's why you need to retrieve the effective input element's value with `$event.target.value` in this case.
 
+### CustomSwitch (Toggle) form component
+
+So our fully working (and minimally styled) CustomSwitch component looks like this:
+
+```js
+ // CustomSwitch.vue 
+<script setup>
+import { Switch } from '@headlessui/vue'
+
+defineProps({
+    modelValue: {
+        type: Boolean,
+        default: false,
+    },
+    label: {
+        type: String,
+        default: '',
+    },
+})
+
+defineEmits(['update:modelValue'])
+</script>
+
+<template>
+    <Switch
+        :class="modelValue ? 'bg-primary-600' : 'bg-gray-300'"
+        class="relative inline-flex h-6 w-11 items-center rounded-full"
+        :modelValue="modelValue"
+        @update:modelValue="(newValue) => $emit('update:modelValue', newValue)"
+    >
+        <span class="sr-only">{{ label }}</span>
+        <span
+            :class="modelValue ? 'translate-x-5' : 'translate-x-0'"
+            class="inline-block h-5 w-5 transform rounded-full bg-white"
+        />
+    </Switch>
+</template>
+```
+
+Full code: Creating a custom reusable switch button in Nuxt 3 involves creating a Vue component that can be used throughout your application. This component should be configurable, allowing for various styles and behaviors depending on its usage. 
+
+```js
+<template>
+    <button
+      :class="['switch-button', { 'switch-button--on': isOn }]"
+      @click="toggleSwitch"
+    >
+      <span :class="['switch-button__slider', { 'switch-button__slider--on': isOn }]" />
+    </button>
+  </template>
+  
+  <script setup>
+  import { ref, defineProps, defineEmits, watch } from 'vue'
+  
+  const props = defineProps({
+    modelValue: Boolean,
+    label: String,
+    disabled: Boolean
+  })
+  
+  const emit = defineEmits(['update:modelValue'])
+  
+  const isOn = ref(props.modelValue)
+  
+  const toggleSwitch = () => {
+    if (!props.disabled) {
+      isOn.value = !isOn.value
+      emit('update:modelValue', isOn.value)
+    }
+  }
+  
+  watch(() => props.modelValue, (newValue) => {
+    isOn.value = newValue
+  })
+  </script>
+  
+  <style scoped>
+  .switch-button {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: #ccc;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    position: relative;
+    width: 60px;
+    height: 30px;
+    transition: background-color 0.3s;
+    border: 1px solid;
+  }
+  .switch-button--on {
+    background-color: #4caf50;
+  }
+  .switch-button__slider {
+    display: block;
+    width: 28px;
+    height: 28px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    left:0;
+    transition: transform 0.3s;
+  }
+  .switch-button__slider--on {
+    transform: translateX(30px);
+  }
+  </style>
+  ```
