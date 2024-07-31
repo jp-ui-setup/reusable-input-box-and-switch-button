@@ -72,4 +72,6 @@ yarn preview
 bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+### Vue.js 3 v-model two-way data binding for Dummies
+
+![Vue.js 3 v-model two-way data binding for Dummies](image.png)

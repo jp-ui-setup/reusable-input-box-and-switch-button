@@ -10,8 +10,9 @@ const state = ref({
   <UCard class="my-4">
     <h1 class="py-2">Simple form</h1>
     <form>
-      <ReusablesBaseInput :vModel="state.search" type="text" placeholder="Search here..."/>
-      <ReusablesBaseInput :vModel="state.name" type="text" placeholder="Name here..." class="my-2"/>
+      <ReusablesBaseInput type="text" placeholder="Search here..." v-model="state.search"/>
+      <ReusablesBaseInput type="text" placeholder="Name here..." class="my-2"/>
     </form>
+    {{ state }}
   </UCard>
 </template>
